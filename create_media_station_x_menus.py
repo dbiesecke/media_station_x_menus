@@ -144,14 +144,19 @@ def createMoviesMenuEntries(root, folder):
         imagefilename = filename[:-5] + '.strm'
         if os.path.exists(os.path.join(root, folder, imagefilename)):
             fd = open( os.path.join(root, folder, imagefilename) , "r")
-            myvar =  fd.readline()
-            fd.close 
-            item = {
-            'title': filename,
-            'action': ''.join(
-                ['video:', str(myvar).replace("\n","")])
-            }
+            try:
+                myvar =  fd.readline()
+                fd.close 
+                item = {
+                'title': filename,
+                'action': ''.join(
+                    ['video:', FLAGS.url_prefix, str(myvar).replace("\n","")])
+                }
+
+            except: # expression as identifier:
+                next
             
+
         imagefilename = filename[:-4] + '.jpg'
         if os.path.exists(os.path.join(root, folder, imagefilename)):
             # To create the images run:
@@ -193,7 +198,10 @@ def main(argv):
         logging.error('Please define an input folder')
         exit(1)
     initDictStruct()
+    
     createMovieFoldersMenus(FLAGS.movies_folder)
+    #except:
+    #    pass
     printMenuToJSON()
 
 
