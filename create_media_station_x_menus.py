@@ -22,7 +22,7 @@ from absl import flags
 from absl import logging
 from collections import OrderedDict
 
-flags.DEFINE_string('movies_folder', None,
+flags.DEFINE_string('movies_folder', "strms",
                     'Folder in which the movies served by the HTTP server '
                     'are stored')
 
@@ -32,10 +32,10 @@ flags.DEFINE_string('url_prefix', None,
 
 flags.DEFINE_string('output_menu_file', None, 'Path to the JSON menu file')
 
-flags.DEFINE_boolean('create_thumbnails', True,
+flags.DEFINE_boolean('create_thumbnails', False,
                      'Whether thumbnails should be created for each movie')
 
-flags.mark_flag_as_required('movies_folder')
+#flags.mark_flag_as_required('movies_folder')
 flags.mark_flag_as_required('url_prefix')
 flags.mark_flag_as_required('output_menu_file')
 
@@ -140,6 +140,18 @@ def createMoviesMenuEntries(root, folder):
             'action': ''.join(
                 ['video:', FLAGS.url_prefix, os.path.join(folder, filename)])
         }
+
+        imagefilename = filename[:-5] + '.strm'
+        if os.path.exists(os.path.join(root, folder, imagefilename)):
+            fd = open( os.path.join(root, folder, imagefilename) , "r")
+            myvar =  fd.readline()
+            fd.close 
+            item = {
+            'title': filename,
+            'action': ''.join(
+                ['video:', str(myvar).replace("\n","")])
+            }
+            
         imagefilename = filename[:-4] + '.jpg'
         if os.path.exists(os.path.join(root, folder, imagefilename)):
             # To create the images run:

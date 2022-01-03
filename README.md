@@ -1,5 +1,12 @@
 # Create Menus For Media Station X.
 
+## Note
+
+I use the code to generate Menu files from .strm files, that have a direct link to the file.
+
+
+## Description (Original)
+
 [Mediat Station X](http://msx.benzac.de/info) is a very useful app available
 for smart devices such as Smart TVs. The app is fully configurable and assumes
 that the media files are stored remotely and served via an HTTP server. The
